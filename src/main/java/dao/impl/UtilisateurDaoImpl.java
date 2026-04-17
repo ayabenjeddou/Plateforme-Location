@@ -1,5 +1,6 @@
 package dao.impl;
 
+import java.sql.Connection;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -39,11 +40,19 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
         s.close();
     }
 
-	@Override
-	public Utilisateur findByLogin(String login) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public Utilisateur findByLogin(String login) {
+
+        Session s = HibernateUtil.getSessionFactory().openSession();
+
+        Utilisateur user = s.createQuery(
+                "FROM Utilisateur u WHERE u.login = :login", Utilisateur.class)
+            .setParameter("login", login)
+            .uniqueResult();
+
+        s.close();
+        return user;
+    }
 
 	@Override
 	public Utilisateur findByLoginAndPassword(String login, String password) {

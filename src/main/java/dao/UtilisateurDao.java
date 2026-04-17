@@ -13,7 +13,7 @@ public interface UtilisateurDao {
 
     void delete(Utilisateur utilisateur);
 
-	Utilisateur findByLogin(String login);
+    Utilisateur findByLogin(String login);
 
 	Utilisateur findByLoginAndPassword(String login, String password);
 }

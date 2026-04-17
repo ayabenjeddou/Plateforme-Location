@@ -3,6 +3,7 @@ package service;
 import dao.UtilisateurDao;
 import dao.impl.UtilisateurDaoImpl;
 import model.Utilisateur;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class UtilisateurService {
 
@@ -21,6 +22,18 @@ public class UtilisateurService {
     }
 
     public Utilisateur login(String login, String password) {
-        return userDao.findByLoginAndPassword(login, password);
+
+        Utilisateur user = userDao.findByLogin(login);
+
+        if (user == null) {
+            return null;
+        }
+
+        // 🔐 BCrypt check
+        if (BCrypt.checkpw(password, user.getMotDePasse())) {
+            return user;
+        }
+
+        return null;
     }
 }

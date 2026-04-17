@@ -1,7 +1,6 @@
 package model;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -47,12 +46,13 @@ public class Paiement {
 		this.statut = statut;
 	}
 
-	/*public LocalDate getDatePaiement() {
-		return datePaiement;
-	} */
-
+	
 	public void setDatePaiement(LocalDateTime localDateTime) {
 		this.datePaiement = localDateTime;
+	}
+
+	public LocalDateTime getDatePaiement() {
+		return datePaiement;
 	}
 
 	public void setReservation(Reservation reservation2) {
