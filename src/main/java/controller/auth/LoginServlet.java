@@ -1,6 +1,8 @@
 package controller.auth;
 
 import java.io.IOException;
+import java.util.Objects;
+
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
@@ -11,7 +13,11 @@ import service.UtilisateurService;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
-    private UtilisateurService userService = new UtilisateurService();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private UtilisateurService userService = new UtilisateurService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -20,6 +26,7 @@ public class LoginServlet extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/views/auth/login.jsp")
                .forward(request, response);
     } 
+    
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -77,5 +84,24 @@ public class LoginServlet extends HttpServlet {
 
 	public void setUserService(UtilisateurService userService) {
 		this.userService = userService;
+	}
+
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(userService);
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		LoginServlet other = (LoginServlet) obj;
+		return Objects.equals(userService, other.userService);
 	}
 }

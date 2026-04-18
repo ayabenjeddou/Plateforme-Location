@@ -4,19 +4,32 @@ import dao.BienDao;
 import dao.impl.BienDaoImpl;
 import model.Bien;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class BienService {
 
     private BienDao bienDao = new BienDaoImpl();
 
-    public void ajouterBien(Bien bien) {
-        bien.setDisponible(true);
+    public void ajouterBien(Bien bien) throws Exception {
+
+        bien.setActive(true);
+
         bienDao.save(bien);
+
         System.out.println("🏠 Bien ajouté !");
     }
 
-    public List<Bien> getDisponibles() {
-        return bienDao.findDisponibles();
+    public List<Bien> getDisponibles(LocalDateTime debut,
+                                     LocalDateTime fin,
+                                     Integer capaciteMin,
+                                     String equipementsContains) throws Exception {
+
+        return BienDao.findAvailable(
+                debut,
+                fin,
+                capaciteMin,
+                equipementsContains
+        );
     }
 }

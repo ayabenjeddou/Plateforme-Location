@@ -1,63 +1,103 @@
 package model;
 
-import java.util.List;
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Table;
+import javax.persistence.Column;
 
 @Entity
+@Table(name = "bien")
 public class Bien {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String nom;
-    private String description;
-    private double prixParHeure;
-    private boolean disponible;
+    
+    private String categorie;
 
-    @ManyToOne
-    @JoinColumn(name = "id_categorie")
-    private CategorieBien categorie;
+    private int capacite;
 
-    @ManyToOne
-    @JoinColumn(name = "id_agent")
-    private Utilisateur agent; // لازم يكون role = AGENT
+    private String localisation;
 
-    @OneToMany(mappedBy = "bien", cascade = CascadeType.ALL)
-    private List<Reservation> reservations;
+    private String equipements;
 
-    public Bien() {}
+    private boolean active;
 
-	public String getNom() {
-		return nom;
+    public Bien() {
+    }
+
+    public Bien(Long id, String nom, int capacite, String localisation, String equipements, boolean active) {
+        this.id = id;
+        this.nom = nom;
+        this.capacite = capacite;
+        this.localisation = localisation;
+        this.equipements = equipements;
+        this.active = active;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public int getCapacite() {
+        return capacite;
+    }
+
+    public void setCapacite(int capacite) {
+        this.capacite = capacite;
+    }
+
+    public String getLocalisation() {
+        return localisation;
+    }
+
+    public void setLocalisation(String localisation) {
+        this.localisation = localisation;
+    }
+
+    public String getEquipements() {
+        return equipements;
+    }
+
+    public void setEquipements(String equipements) {
+        this.equipements = equipements;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+	public long getPrixParHeure() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
-	public void setNom(String nom) {
-		this.nom = nom;
+	public String getCategorie() {
+		return categorie;
 	}
 
-	public String getDescription() {
-		return description;
+	public void setCategorie(String categorie) {
+		this.categorie = categorie;
 	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public double getPrixParHeure() {
-	    return prixParHeure;
-	}
-
-	public void setPrixParHeure(double prixParHeure) {
-	    this.prixParHeure = prixParHeure;
-	}
-
-	public boolean isDisponible() {
-		return disponible;
-	}
-
-	public void setDisponible(boolean disponible) {
-		this.disponible = disponible;
-	}
-
 }

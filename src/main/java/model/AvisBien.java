@@ -10,19 +10,20 @@ public class AvisBien {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int note; // 1 à 5
+    private int note;
+ // 1 à 5
 
     private String commentaire;
 
     private LocalDateTime dateCreation;
 
     @ManyToOne
-    @JoinColumn(name = "id_bien")
+    @JoinColumn(name = "bien_id")
     private Bien bien;
 
     @ManyToOne
-    @JoinColumn(name = "id_client")
-    private Utilisateur client;
+    @JoinColumn(name = "utilisateur_id")
+    private Utilisateur utilisateur;
     
     public AvisBien() {
         this.setDateCreation(LocalDateTime.now());
@@ -50,6 +51,16 @@ public class AvisBien {
 
 	public void setDateCreation(LocalDateTime dateCreation) {
 		this.dateCreation = dateCreation;
+	}
+
+	public void setIdBien(Bien bien_id) {
+		this.bien=bien_id;
+		
+	}
+
+	public void setIdUser(Long id2) {
+		// TODO Auto-generated method stub
+		
 	}
 
     

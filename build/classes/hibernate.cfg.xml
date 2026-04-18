@@ -15,7 +15,7 @@
         <property name="hibernate.format_sql">true</property>
 
         <!-- Auto update -->
-		<property name="hibernate.hbm2ddl.auto">update</property>
+		<property name="hibernate.hbm2ddl.auto">create</property>
         <!-- Entities  -->
         <mapping class="model.Utilisateur"/>
 		<mapping class="model.Admin"/>
