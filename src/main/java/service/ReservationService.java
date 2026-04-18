@@ -10,40 +10,46 @@ public class ReservationService {
 
     private ReservationDao reservationDao = new ReservationDaoImpl();
 
-    public Reservation reserver(Client client, Bien bien, int nbJours) {
+    public Reservation reserver(Utilisateur user, Bien bien,
+                                LocalDateTime debut, LocalDateTime fin) {
 
-        if (!bien.isDisponible()) {
-            throw new RuntimeException("❌ Bien non disponible !");
+        // ✅ validation
+        if (!fin.isAfter(debut)) {
+            throw new RuntimeException("❌ Fin doit être après début");
         }
 
+        if (debut.isBefore(LocalDateTime.now())) {
+            throw new RuntimeException("❌ Date doit être dans le futur");
+        }
+
+        // 🔥 création réservation
         Reservation r = new Reservation();
-        r.setClient(client);
+        r.setUtilisateur(user);
         r.setBien(bien);
-        r.setDateReservation(LocalDateTime.now());
-        r.setStatut(StatutReservation.CONFIRMEE);
+        r.setDateHeureDebut(debut);
+        r.setDateHeureFin(fin);
+        r.setDateCreation(LocalDateTime.now());
+        r.setStatut(StatutReservation.EN_ATTENTE);
+        long hours = java.time.Duration.between(debut, fin).toHours();
 
-        // 🔥 logique métier
-        double total = bien.getPrixParJour() * nbJours;
-        r.setMontantTotal(total);
+        double montant = hours * bien.getPrixParHeure(); // أو getPrixParHeure()
 
-        // 🔒 rendre le bien indisponible
-        bien.setDisponible(false);
-
+        r.setMontantTotal(montant);
+        double montant1 = hours * bien.getPrixParHeure();
+        r.setMontantTotal(montant1);
         reservationDao.save(r);
 
-        System.out.println("✅ Réservation confirmée !");
         return r;
     }
 
     public void annuler(Reservation r) {
 
+        if (r.getStatut() == StatutReservation.ANNULEE) {
+            throw new RuntimeException("Déjà annulée");
+        }
+
         r.setStatut(StatutReservation.ANNULEE);
 
-        // 🔓 rendre bien disponible
-        r.getBien().setDisponible(true);
-
         reservationDao.save(r);
-
-        System.out.println("❌ Réservation annulée !");
     }
 }

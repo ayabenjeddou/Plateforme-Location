@@ -3,41 +3,93 @@ package model;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+
 @Entity
+@Table(name = "reservation")
 public class Reservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDateTime dateReservation;
+    // 🔗 relation Salle (Bien)
+    @ManyToOne
+    @JoinColumn(name = "id_bien", nullable = false)
+    private Bien bien;
 
+    // 🔗 relation Utilisateur
+    @ManyToOne
+    @JoinColumn(name = "id_user", nullable = false)
+    private Utilisateur utilisateur;
+
+    // ⏱️ dates
+    @Column(name = "date_heure_debut", nullable = false)
+    private LocalDateTime dateHeureDebut;
+
+    @Column(name = "date_heure_fin", nullable = false)
+    private LocalDateTime dateHeureFin;
+
+    @Column(name = "date_creation")
+    private LocalDateTime dateCreation;
+
+    // 📌 statut
     @Enumerated(EnumType.STRING)
     private StatutReservation statut;
 
-    @ManyToOne
-    private Client client;
+    // 💬 commentaire
+    private String commentaire;
 
-    @ManyToOne
-    private Bien bien;
-    
+    // ⚡ bien active (optionnel)
+    private Boolean bienActive;
+
     private double montantTotal;
-
     // ✅ constructeur
     public Reservation() {}
 
-    // ✅ getters & setters
+    // ===== GETTERS / SETTERS =====
 
     public Long getId() {
         return id;
     }
 
-    public LocalDateTime getDateReservation() {
-        return dateReservation;
+    public Bien getBien() {
+        return bien;
     }
 
-    public void setDateReservation(LocalDateTime dateReservation) {
-        this.dateReservation = dateReservation;
+    public void setBien(Bien bien) {
+        this.bien = bien;
+    }
+
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
+    }
+
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
+    }
+
+    public LocalDateTime getDateHeureDebut() {
+        return dateHeureDebut;
+    }
+
+    public void setDateHeureDebut(LocalDateTime dateHeureDebut) {
+        this.dateHeureDebut = dateHeureDebut;
+    }
+
+    public LocalDateTime getDateHeureFin() {
+        return dateHeureFin;
+    }
+
+    public void setDateHeureFin(LocalDateTime dateHeureFin) {
+        this.dateHeureFin = dateHeureFin;
+    }
+
+    public LocalDateTime getDateCreation() {
+        return dateCreation;
+    }
+
+    public void setDateCreation(LocalDateTime dateCreation) {
+        this.dateCreation = dateCreation;
     }
 
     public StatutReservation getStatut() {
@@ -48,27 +100,28 @@ public class Reservation {
         this.statut = statut;
     }
 
-    public Client getClient() {
-        return client;
+    public String getCommentaire() {
+        return commentaire;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setCommentaire(String commentaire) {
+        this.commentaire = commentaire;
     }
 
-    public Bien getBien() {
-        return bien;
-    }
 
-    public void setBien(Bien bien) {
-        this.bien = bien;
-    }
-    
-    public double getMontantTotal() {
-        return montantTotal;
-    }
+	public Boolean getBienActive() {
+		return bienActive;
+	}
 
-    public void setMontantTotal(double montantTotal) {
-        this.montantTotal = montantTotal;
-    }
+	public void setBienActive(Boolean bienActive) {
+		this.bienActive = bienActive;
+	}
+
+	public double getMontantTotal() {
+		return montantTotal;
+	}
+
+	public void setMontantTotal(double montantTotal) {
+		this.montantTotal = montantTotal;
+	}
 }

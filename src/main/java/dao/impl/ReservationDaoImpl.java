@@ -5,8 +5,9 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import config.HibernateUtil;
 import dao.ReservationDao;
-import model.Client;
 import model.Reservation;
+import model.StatutReservation;
+import model.Utilisateur;
 
 public class ReservationDaoImpl implements ReservationDao {
 
@@ -40,20 +41,22 @@ public class ReservationDaoImpl implements ReservationDao {
         s.close();
     }
 
-    public List<Reservation> findByClient(Client client) {
+    @Override
+    public List<Reservation> findByUtilisateur(Utilisateur user) {
+
         Session s = HibernateUtil.getSessionFactory().openSession();
 
         List<Reservation> list = s.createQuery(
-                "FROM Reservation r WHERE r.client.id = :id",
-                Reservation.class)
-                .setParameter("id", client.getId())
-                .list();
+            "FROM Reservation r WHERE r.utilisateur = :user",
+            Reservation.class
+        ).setParameter("user", user)
+         .list();
 
         s.close();
         return list;
     }
 
-    public List<Reservation> findByStatut(String statut) {
+    public List<Reservation> findByStatut(StatutReservation statut) {
         Session s = HibernateUtil.getSessionFactory().openSession();
 
         List<Reservation> list = s.createQuery(

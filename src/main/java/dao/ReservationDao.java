@@ -2,7 +2,8 @@ package dao;
 
 import java.util.List;
 import model.Reservation;
-import model.Client;
+import model.StatutReservation;
+import model.Utilisateur;
 
 public interface ReservationDao {
 
@@ -14,9 +15,10 @@ public interface ReservationDao {
 
     void delete(Reservation reservation);
 
-    List<Reservation> findByClient(Client client);
+    List<Reservation> findByUtilisateur(Utilisateur user);
 
-    List<Reservation> findByStatut(String statut);
+
+    List<Reservation> findByStatut(StatutReservation statut);
 
     List<Reservation> findByBien(Long idBien);
 }

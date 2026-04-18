@@ -12,7 +12,7 @@ public class Bien {
 
     private String nom;
     private String description;
-    private double prixParJour;
+    private double prixParHeure;
     private boolean disponible;
 
     @ManyToOne
@@ -44,12 +44,12 @@ public class Bien {
 		this.description = description;
 	}
 
-	public double getPrixParJour() {
-		return prixParJour;
+	public double getPrixParHeure() {
+	    return prixParHeure;
 	}
 
-	public void setPrixParJour(double prixParJour) {
-		this.prixParJour = prixParJour;
+	public void setPrixParHeure(double prixParHeure) {
+	    this.prixParHeure = prixParHeure;
 	}
 
 	public boolean isDisponible() {

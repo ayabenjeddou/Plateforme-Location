@@ -92,4 +92,12 @@ package controller.user;
 	        request.getRequestDispatcher("/WEB-INF/views/user/home.jsp")
 	               .forward(request, response);
 	    }
+
+		public BienDao getBienDao() {
+			return BienDao;
+		}
+
+		public void setBienDao(BienDao bienDao) {
+			BienDao = bienDao;
+		}
 	}
