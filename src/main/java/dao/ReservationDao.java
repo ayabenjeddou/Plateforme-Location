@@ -21,4 +21,6 @@ public interface ReservationDao {
     List<Reservation> findByStatut(StatutReservation statut);
 
     List<Reservation> findByBien(Long idBien);
+
+	void updateStatus(Long id, String newStatus, String defaultComment);
 }

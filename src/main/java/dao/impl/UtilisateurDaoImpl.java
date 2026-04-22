@@ -1,6 +1,5 @@
 package dao.impl;
 
-import java.sql.Connection;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -54,9 +53,47 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
         return user;
     }
 
+    @Override
+    public Utilisateur findByLoginAndPassword(String login, String password) {
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
+
+        try {
+
+            return session.createQuery(
+                    "FROM Utilisateur u WHERE u.login = :login AND u.motDePasse = :password",
+                    Utilisateur.class
+            )
+            .setParameter("login", login)
+            .setParameter("password", password)
+            .uniqueResult();
+
+        } finally {
+            session.close();
+        }
+    }
+    
 	@Override
-	public Utilisateur findByLoginAndPassword(String login, String password) {
-		// TODO Auto-generated method stub
-		return null;
+	public void delete(Long id) {
+
+	    Session session = HibernateUtil.getSessionFactory().openSession();
+	    Transaction tx = null;
+
+	    try {
+	        tx = session.beginTransaction();
+
+	        session.createQuery("DELETE FROM Utilisateur u WHERE u.id = :id")
+	               .setParameter("id", id)
+	               .executeUpdate();
+
+	        tx.commit();
+
+	    } catch (Exception e) {
+	        if (tx != null) tx.rollback();
+	        throw e;
+
+	    } finally {
+	        session.close();
+	    }
 	}
 }

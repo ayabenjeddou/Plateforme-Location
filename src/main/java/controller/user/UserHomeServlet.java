@@ -22,7 +22,7 @@ package controller.user;
 
 	    private static final long serialVersionUID = 1L;
 
-	    private BienDao BienDao = new BienDaoImpl();
+	    private BienDao bienDao = new BienDaoImpl();
 
 	    @Override
 	    protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -72,7 +72,7 @@ package controller.user;
 	                    }
 
 	                    if (error == null) {
-	                        Biens = dao.BienDao.findAvailable(debut, fin, capaciteMin, equipements);
+	                        Biens = bienDao.findAvailable(debut, fin, capaciteMin, equipements);
 	                        // pour pré-remplir le formulaire de réservation
 	                        request.setAttribute("searchDebut", debut.toString());
 	                        request.setAttribute("searchFin", fin.toString());
@@ -94,10 +94,10 @@ package controller.user;
 	    }
 
 		public BienDao getBienDao() {
-			return BienDao;
+			return bienDao;
 		}
 
 		public void setBienDao(BienDao bienDao) {
-			BienDao = bienDao;
+			this.bienDao = bienDao;
 		}
 	}

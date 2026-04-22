@@ -91,4 +91,20 @@ public class AvisBienDaoImpl implements AvisBienDao {
 
         s.close();
     }
+    @Override
+    public List<AvisBien> findAll() {
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<AvisBien> list = null;
+
+        try {
+            list = session.createQuery("FROM AvisBien", AvisBien.class).list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return list;
+    }
 }

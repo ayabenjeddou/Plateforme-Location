@@ -14,135 +14,103 @@ import model.Bien;
 public class BienDaoImpl implements BienDao {
 
     @Override
-    public Bien findById(Long id) throws Exception {
-
-        Session session = HibernateUtil.getSessionFactory().openSession();
-
-        Bien bien = session.get(Bien.class, id);
-
-        session.close();
-
-        return bien;
-    }
-
-    @Override
-    public List<Bien> findAll() throws Exception {
-
-        Session session = HibernateUtil.getSessionFactory().openSession();
-
-        List<Bien> list = session
-                .createQuery("FROM Bien ORDER BY nom", Bien.class)
-                .list();
-
-        session.close();
-
-        return list;
-    }
-
-    @Override
-    public void save(Bien bien) throws Exception {
-
-        Session session = HibernateUtil.getSessionFactory().openSession();
-
-        Transaction tx = session.beginTransaction();
-
-        session.saveOrUpdate(bien);
-
-        tx.commit();
-
-        session.close();
-    }
-
-    @Override
-    public void delete(Long id) throws Exception {
-
-        Session session = HibernateUtil.getSessionFactory().openSession();
-
-        Transaction tx = session.beginTransaction();
-
-        Bien bien = session.get(Bien.class, id);
-
-        if (bien != null) {
-
-            session.delete(bien);
+    public Bien findById(Long id) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.get(Bien.class, id);
         }
-
-        tx.commit();
-
-        session.close();
     }
 
+    @Override
+    public List<Bien> findAll() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery("FROM Bien ORDER BY nom", Bien.class).list();
+        }
+    }
+
+    @Override
+    public void save(Bien bien) {
+        Transaction tx = null;
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+
+            tx = session.beginTransaction();
+            session.saveOrUpdate(bien);
+            tx.commit();
+
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            throw e;
+        }
+    }
+
+    @Override
+    public void delete(Long id) {
+        Transaction tx = null;
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+
+            tx = session.beginTransaction();
+
+            Bien bien = session.get(Bien.class, id);
+            if (bien != null) {
+                session.delete(bien);
+            }
+
+            tx.commit();
+
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            throw e;
+        }
+    }
+
+    @Override
     public List<Bien> findAvailable(LocalDateTime debut,
-                                   LocalDateTime fin,
-                                   Integer capaciteMin,
-                                   String equipementsContains) throws Exception {
+                                    LocalDateTime fin,
+                                    Integer capaciteMin,
+                                    String equipementsContains) {
 
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 
-        StringBuilder hql = new StringBuilder(
-                "FROM Bien b WHERE b.active = true"
-        );
+            StringBuilder hql = new StringBuilder("FROM Bien b WHERE b.active = true");
 
-        if (capaciteMin != null) {
+            if (capaciteMin != null) {
+                hql.append(" AND b.capacite >= :capaciteMin");
+            }
 
-            hql.append(" AND b.capacite >= :capaciteMin");
+            if (equipementsContains != null && !equipementsContains.isEmpty()) {
+                hql.append(" AND b.equipements LIKE :equipements");
+            }
+
+            hql.append("""
+                AND b.id NOT IN (
+                    SELECT r.bien.id
+                    FROM Reservation r
+                    WHERE r.statut IN ('EN_ATTENTE','CONFIRMEE')
+                    AND r.dateHeureDebut < :fin
+                    AND r.dateHeureFin > :debut
+                )
+            """);
+
+            Query<Bien> query = session.createQuery(hql.toString(), Bien.class);
+
+            if (capaciteMin != null)
+                query.setParameter("capaciteMin", capaciteMin);
+
+            if (equipementsContains != null && !equipementsContains.isEmpty())
+                query.setParameter("equipements", "%" + equipementsContains + "%");
+
+            query.setParameter("debut", debut);
+            query.setParameter("fin", fin);
+
+            return query.list();
         }
-
-        if (equipementsContains != null && !equipementsContains.isEmpty()) {
-
-            hql.append(" AND b.equipements LIKE :equipements");
-        }
-
-        hql.append("""
-            AND b.id NOT IN (
-                SELECT r.bien.id
-                FROM Reservation r
-                WHERE r.statut IN ('EN_ATTENTE','VALIDEE')
-                AND r.dateHeureDebut < :fin
-                AND r.dateHeureFin > :debut
-            )
-        """);
-
-        Query<Bien> query = session.createQuery(hql.toString(), Bien.class);
-
-        if (capaciteMin != null) {
-
-            query.setParameter("capaciteMin", capaciteMin);
-        }
-
-        if (equipementsContains != null && !equipementsContains.isEmpty()) {
-
-            query.setParameter("equipements",
-                    "%" + equipementsContains + "%");
-        }
-
-        query.setParameter("fin", fin);
-
-        query.setParameter("debut", debut);
-
-        List<Bien> list = query.list();
-
-        session.close();
-
-        return list;
     }
-    
+
     @Override
     public List<Bien> findDisponibles() {
-
-        Session session = HibernateUtil
-                .getSessionFactory()
-                .openSession();
-
-        List<Bien> list = session
-                .createQuery(
-                        "FROM Bien WHERE active = true",
-                        Bien.class
-                )
-                .list();
-
-        session.close();
-
-        return list;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery("FROM Bien WHERE active = true", Bien.class).list();
+        }
     }
 }

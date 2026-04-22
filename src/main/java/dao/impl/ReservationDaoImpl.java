@@ -81,4 +81,31 @@ public class ReservationDaoImpl implements ReservationDao {
         s.close();
         return list;
     }
+    @Override
+    public void updateStatus(Long id, String newStatus, String defaultComment) {
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+
+        try {
+            tx = session.beginTransaction();
+
+            session.createQuery(
+                "UPDATE Reservation r SET r.statut = :statut, r.commentaire = :comment WHERE r.id = :id"
+            )
+            .setParameter("statut", StatutReservation.valueOf(newStatus))
+            .setParameter("comment", defaultComment)
+            .setParameter("id", id)
+            .executeUpdate();
+
+            tx.commit();
+
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            throw e;
+
+        } finally {
+            session.close();
+        }
+    }
 }

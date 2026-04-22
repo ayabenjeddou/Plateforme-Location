@@ -16,4 +16,6 @@ public interface UtilisateurDao {
     Utilisateur findByLogin(String login);
 
 	Utilisateur findByLoginAndPassword(String login, String password);
+
+	void delete(Long id);
 }

@@ -1,0 +1,143 @@
+package controller.admin;
+
+import java.io.IOException;
+import java.util.List;
+
+import dao.BienDao;
+import dao.impl.BienDaoImpl;
+import model.Bien;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
+
+@WebServlet("/admin/biens")
+public class AdminBienServlet extends HttpServlet {
+
+    private static final long serialVersionUID = 1L;
+
+    private BienDao bienDao = new BienDaoImpl();
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String action = request.getParameter("action");
+        if (action == null) action = "list";
+
+        try {
+            switch (action) {
+                case "edit":
+                    showForm(request, response);
+                    break;
+                case "delete":
+                    deleteBien(request, response);
+                    break;
+                default:
+                    listBiens(request, response);
+                    break;
+            }
+        } catch (Exception e) {
+            throw new ServletException(e);
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        try {
+            saveBien(request, response);
+        } catch (Exception e) {
+            throw new ServletException(e);
+        }
+    }
+
+    private void listBiens(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+
+        List<Bien> biens = bienDao.findAll(); // ✔️ FIX
+        request.setAttribute("biens", biens);
+
+        request.getRequestDispatcher("/WEB-INF/views/admin/biens/list.jsp")
+               .forward(request, response);
+    }
+
+    private void showForm(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+
+        String idStr = request.getParameter("id");
+
+        if (idStr != null && !idStr.isEmpty()) {
+            Long id = Long.parseLong(idStr);
+            Bien bien = bienDao.findById(id); // ✔️ FIX
+            request.setAttribute("bien", bien);
+        }
+
+        request.getRequestDispatcher("/WEB-INF/views/admin/biens/form.jsp") // ✔️ FIX
+               .forward(request, response);
+    }
+
+    private void saveBien(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+
+        String idStr = request.getParameter("id");
+        String nom = request.getParameter("nom");
+        String capaciteStr = request.getParameter("capacite");
+        String localisation = request.getParameter("localisation");
+        String equipements = request.getParameter("equipements");
+        String activeStr = request.getParameter("active");
+
+        String error = null;
+        int capacite = 0;
+
+        if (nom == null || nom.trim().isEmpty()) {
+            error = "Nom obligatoire";
+        } else {
+            try {
+                capacite = Integer.parseInt(capaciteStr);
+                if (capacite <= 0) error = "Capacité invalide";
+            } catch (Exception e) {
+                error = "Capacité doit être un nombre";
+            }
+        }
+
+        Bien bien = new Bien();
+
+        if (idStr != null && !idStr.isEmpty()) {
+            bien.setId(Long.parseLong(idStr));
+        }
+
+        bien.setNom(nom);
+        bien.setCapacite(capacite);
+        bien.setLocalisation(localisation);
+        bien.setEquipements(equipements);
+        bien.setActive(activeStr != null);
+
+        if (error != null) {
+            request.setAttribute("error", error);
+            request.setAttribute("bien", bien);
+
+            request.getRequestDispatcher("/WEB-INF/views/admin/biens/form.jsp")
+                   .forward(request, response);
+            return;
+        }
+
+        bienDao.save(bien); // ✔️ FIX
+
+        response.sendRedirect(request.getContextPath() + "/admin/biens"); // ✔️ FIX
+    }
+
+    private void deleteBien(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+
+        String idStr = request.getParameter("id");
+
+        if (idStr != null && !idStr.isEmpty()) {
+            Long id = Long.parseLong(idStr);
+            bienDao.delete(id); // ✔️ FIX
+        }
+
+        response.sendRedirect(request.getContextPath() + "/admin/biens");
+    }
+}

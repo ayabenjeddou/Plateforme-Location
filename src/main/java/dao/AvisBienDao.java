@@ -14,4 +14,8 @@ public interface AvisBienDao {
     void save(AvisBien avis);
 
     void delete(Long id);
+
+	List<AvisBien> findAll();
+
+	
 }

@@ -25,7 +25,7 @@ public class BienService {
                                      Integer capaciteMin,
                                      String equipementsContains) throws Exception {
 
-        return BienDao.findAvailable(
+        return bienDao.findAvailable(
                 debut,
                 fin,
                 capaciteMin,
