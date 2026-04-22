@@ -4,64 +4,98 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "avis_bien")
 public class AvisBien {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int note;
- // 1 à 5
+    // 🔗 relation مع Bien
+    @ManyToOne
+    @JoinColumn(name = "bien_id", nullable = false)
+    private Bien bien;
 
+    // 🔗 relation مع Utilisateur
+    @ManyToOne
+    @JoinColumn(name = "utilisateur_id", nullable = false)
+    private Utilisateur utilisateur;
+
+    @Column(nullable = false)
+    private int note; // 1 à 5
+
+    @Column(length = 1000)
     private String commentaire;
 
     private LocalDateTime dateCreation;
 
-    @ManyToOne
-    @JoinColumn(name = "bien_id")
-    private Bien bien;
+    // ⚠️ هذوما مش مخزنين في DB (فقط affichage)
+    @Transient
+    private String bienNom;
 
-    @ManyToOne
-    @JoinColumn(name = "utilisateur_id")
-    private Utilisateur utilisateur;
-    
+    @Transient
+    private String utilisateurLogin;
+
+    // ✅ constructeur
     public AvisBien() {
-        this.setDateCreation(LocalDateTime.now());
+        this.dateCreation = LocalDateTime.now();
     }
 
-	public int getNote() {
-		return note;
-	}
+    // getters & setters
 
-	public void setNote(int note) {
-		this.note = note;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getCommentaire() {
-		return commentaire;
-	}
+    public Bien getBien() {
+        return bien;
+    }
 
-	public void setCommentaire(String commentaire) {
-		this.commentaire = commentaire;
-	}
+    public void setBien(Bien bien) {
+        this.bien = bien;
+    }
 
-	public LocalDateTime getDateCreation() {
-		return dateCreation;
-	}
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
+    }
 
-	public void setDateCreation(LocalDateTime dateCreation) {
-		this.dateCreation = dateCreation;
-	}
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
+    }
 
-	public void setIdBien(Bien bien_id) {
-		this.bien=bien_id;
-		
-	}
+    public int getNote() {
+        return note;
+    }
 
-	public void setIdUser(Long id2) {
-		// TODO Auto-generated method stub
-		
-	}
+    public void setNote(int note) {
+        this.note = note;
+    }
 
-    
+    public String getCommentaire() {
+        return commentaire;
+    }
+
+    public void setCommentaire(String commentaire) {
+        this.commentaire = commentaire;
+    }
+
+    public LocalDateTime getDateCreation() {
+        return dateCreation;
+    }
+
+    public String getBienNom() {
+        return bienNom;
+    }
+
+    public void setBienNom(String bienNom) {
+        this.bienNom = bienNom;
+    }
+
+    public String getUtilisateurLogin() {
+        return utilisateurLogin;
+    }
+
+    public void setUtilisateurLogin(String utilisateurLogin) {
+        this.utilisateurLogin = utilisateurLogin;
+    }
 }
