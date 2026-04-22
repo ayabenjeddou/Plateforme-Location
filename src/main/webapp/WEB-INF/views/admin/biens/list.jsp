@@ -293,7 +293,7 @@
             <p>Ajoutez, modifiez et gérez les espaces de réunion</p>
         </div>
     </div>
-    <a href="${pageContext.request.contextPath}/admin/salles?action=edit" class="btn-add">
+    <a href="${pageContext.request.contextPath}/admin/biens?action=edit" class="btn-add">
         <i class="fas fa-plus"></i>
         Ajouter une espace
     </a>
@@ -309,17 +309,19 @@
                 </div>
                 <h3>Aucune espace enregistrée</h3>
                 <p>Commencez par ajouter votre première espace de réunion.</p>
-                <a href="${pageContext.request.contextPath}/admin/salles?action=edit" class="btn-add">
+                <a href="${pageContext.request.contextPath}/admin/biens?action=edit" class="btn-add">
                     <i class="fas fa-plus"></i>
                     Ajouter une espace
                 </a>
             </div>
         </c:when>
         <c:otherwise>
-            <c:forEach var="s" items="${espaces}">
+            <c:forEach var="s" items="${biens}">
                 <div class="room-card">
-                    <div class="room-card-header">
-                        <i class="fas fa-door-open"></i>
+                    <div class="room-card-header" <c:if test="${not empty s.imageUrl}">style="background-image: url('${pageContext.request.contextPath}/${s.imageUrl}'); background-size: cover; background-position: center;"</c:if>>
+                        <c:if test="${empty s.imageUrl}">
+                            <i class="fas fa-door-open"></i>
+                        </c:if>
                         <div class="room-capacity-badge">
                             <i class="fas fa-users"></i>
                             ${s.capacite} places
@@ -327,6 +329,11 @@
                     </div>
                     <div class="room-card-body">
                         <h3 class="room-name">${s.nom}</h3>
+                        <c:if test="${not empty s.description}">
+                            <p style="font-size: 13px; color: var(--gray-600); margin-bottom: 16px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                                ${s.description}
+                            </p>
+                        </c:if>
                         <div class="room-info-list">
                             <div class="room-info-item">
                                 <i class="fas fa-map-marker-alt"></i>

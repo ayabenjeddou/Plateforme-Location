@@ -272,7 +272,7 @@
             </c:if>
 
             <!-- Form -->
-            <form action="${pageContext.request.contextPath}/admin/biens" method="post">
+            <form action="${pageContext.request.contextPath}/admin/biens" method="post" enctype="multipart/form-data">
                 <c:if test="${not empty bien.id}">
                     <input type="hidden" name="id" value="${bien.id}" />
                 </c:if>
@@ -338,6 +338,39 @@
                         <i class="fas fa-info-circle"></i>
                         Séparez les équipements par des virgules
                     </p>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">
+                        <i class="fas fa-align-left"></i>
+                        Description
+                    </label>
+                    <textarea id="description" 
+                              name="description"
+                              class="form-textarea"
+                              placeholder="Ex: Belle salle lumineuse avec vue sur le jardin...">${bien.description}</textarea>
+                    <p class="help-text">
+                        <i class="fas fa-info-circle"></i>
+                        Décrivez l'espace en quelques phrases
+                    </p>
+                </div>
+
+                <div class="form-group">
+                    <label for="image">
+                        <i class="fas fa-image"></i>
+                        Image de l'espace
+                    </label>
+                    <c:if test="${not empty bien.imageUrl}">
+                        <div style="margin-bottom: 10px;">
+                            <img src="${pageContext.request.contextPath}/${bien.imageUrl}" alt="Image actuelle" style="max-height: 100px; border-radius: 8px;">
+                            <p class="help-text">Image actuelle. Choisissez un nouveau fichier pour la remplacer.</p>
+                        </div>
+                    </c:if>
+                    <input type="file" 
+                           id="image" 
+                           name="image"
+                           class="form-input"
+                           accept="image/*" />
                 </div>
                 <div class="form-check mb-3">
     <input type="checkbox" class="form-check-input" id="active" name="active"

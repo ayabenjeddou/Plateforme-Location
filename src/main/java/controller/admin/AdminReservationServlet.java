@@ -31,7 +31,7 @@ public class AdminReservationServlet extends HttpServlet {
         try {
             switch (action) {
                 case "validate":
-                    changeStatus(request, response, "VALIDEE", "Validée par l'administrateur");
+                    changeStatus(request, response, "CONFIRMEE", "Validée par l'administrateur");
                     break;
                 case "refuse":
                     changeStatus(request, response, "REFUSEE", "Refusée par l'administrateur");
@@ -65,13 +65,15 @@ public class AdminReservationServlet extends HttpServlet {
 
         for (Reservation r : allReservations) {
             StatutReservation statut = r.getStatut();
-            if ("EN_ATTENTE".equals(statut)) {
+            if (statut == null) continue;
+            
+            if ("EN_ATTENTE".equals(statut.name())) {
                 pendingCount++;
-            } else if ("VALIDEE".equals(statut)) { // statut en base = VALIDEE
+            } else if ("CONFIRMEE".equals(statut.name()) || "PAYEE".equals(statut.name())) {
                 confirmedCount++;
-            } else if ("REFUSEE".equals(statut)) {
+            } else if ("REFUSEE".equals(statut.name())) {
                 refusedCount++;
-            } else if ("ANNULEE".equals(statut)) {
+            } else if ("ANNULEE".equals(statut.name())) {
                 cancelledCount++;
             }
         }
@@ -88,7 +90,7 @@ public class AdminReservationServlet extends HttpServlet {
             filteredReservations = allReservations;
         } else {
             for (Reservation r : allReservations) {
-                if (statusFilter.equals(r.getStatut())) {
+                if (statusFilter.equals(r.getStatut().name())) {
                     filteredReservations.add(r);
                 }
             }

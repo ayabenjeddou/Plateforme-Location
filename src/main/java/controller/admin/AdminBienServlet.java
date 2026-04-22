@@ -9,9 +9,12 @@ import model.Bien;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.*;
+import java.io.File;
 
 @WebServlet("/admin/biens")
+@MultipartConfig(fileSizeThreshold=1024*1024*2, maxFileSize=1024*1024*10, maxRequestSize=1024*1024*50)
 public class AdminBienServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -86,6 +89,7 @@ public class AdminBienServlet extends HttpServlet {
         String capaciteStr = request.getParameter("capacite");
         String localisation = request.getParameter("localisation");
         String equipements = request.getParameter("equipements");
+        String description = request.getParameter("description");
         String activeStr = request.getParameter("active");
 
         String error = null;
@@ -105,14 +109,34 @@ public class AdminBienServlet extends HttpServlet {
         Bien bien = new Bien();
 
         if (idStr != null && !idStr.isEmpty()) {
-            bien.setId(Long.parseLong(idStr));
+            bien = bienDao.findById(Long.parseLong(idStr));
+            if (bien == null) {
+                bien = new Bien();
+                bien.setId(Long.parseLong(idStr));
+            }
         }
 
         bien.setNom(nom);
         bien.setCapacite(capacite);
         bien.setLocalisation(localisation);
         bien.setEquipements(equipements);
+        bien.setDescription(description);
         bien.setActive(activeStr != null);
+
+        // Upload de l'image
+        Part part = request.getPart("image");
+        if (part != null && part.getSize() > 0) {
+            String fileName = java.nio.file.Paths.get(part.getSubmittedFileName()).getFileName().toString();
+            // Create path in the deployed webapp folder
+            String uploadPath = request.getServletContext().getRealPath("") + File.separator + "assets" + File.separator + "images" + File.separator + "uploads";
+            File uploadDir = new File(uploadPath);
+            if (!uploadDir.exists()) uploadDir.mkdirs();
+            
+            String uniqueFileName = System.currentTimeMillis() + "_" + fileName;
+            part.write(uploadPath + File.separator + uniqueFileName);
+            
+            bien.setImageUrl("assets/images/uploads/" + uniqueFileName);
+        }
 
         if (error != null) {
             request.setAttribute("error", error);

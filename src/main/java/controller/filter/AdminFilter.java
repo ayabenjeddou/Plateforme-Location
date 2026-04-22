@@ -33,13 +33,23 @@ public class AdminFilter implements Filter {
         HttpSession session = req.getSession(false);
         Utilisateur user = (session != null) ? (Utilisateur) session.getAttribute("userSession") : null;
 
-        if (user == null || !"ADMIN".equals(user.getRole())) {
-            // pas admin => on le renvoie à l'accueil utilisateur ou login
-            if (user == null) {
-                res.sendRedirect(req.getContextPath() + "/login");
-            } else {
-                res.sendRedirect(req.getContextPath() + "/user/home");
+        if (user == null) {
+            res.sendRedirect(req.getContextPath() + "/login");
+            return;
+        }
+
+        String path = req.getRequestURI().substring(req.getContextPath().length());
+
+        if ("AGENT".equals(user.getRole())) {
+            // L'agent n'a pas accès à users, dashboard et stats de l'admin
+            if (path.startsWith("/admin/users") || path.startsWith("/admin/dashboard") || path.startsWith("/admin/stats")) {
+                res.sendRedirect(req.getContextPath() + "/agent/dashboard");
+                return;
             }
+            // Sinon on laisse passer l'agent pour biens, reservations, etc.
+        } else if (!"ADMIN".equals(user.getRole())) {
+            // Ni admin ni agent sur une route admin
+            res.sendRedirect(req.getContextPath() + "/user/home");
             return;
         }
 

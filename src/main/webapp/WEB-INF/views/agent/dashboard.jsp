@@ -1,10 +1,10 @@
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="jakarta.tags.core"%>
-<c:set var="pageTitle" value="Dashboard - SmartSpace System Admin" scope="request"/>
+<c:set var="pageTitle" value="Dashboard - SmartSpace System Agent" scope="request"/>
 <jsp:include page="/WEB-INF/views/includes/header.jsp" />
 
 <style>
-    /* ===== DASHBOARD HEADER ===== */
+    /* ===== DASHBOARD HEADER ===== */ 
     .dashboard-header {
         margin-bottom: 32px;
     }
@@ -150,11 +150,6 @@
         flex-shrink: 0;
     }
 
-    .action-icon.users {
-        background: linear-gradient(135deg, #DBEAFE 0%, #BFDBFE 100%);
-        color: #2563EB;
-    }
-
     .action-icon.rooms {
         background: linear-gradient(135deg, #D1FAE5 0%, #A7F3D0 100%);
         color: #059669;
@@ -163,11 +158,6 @@
     .action-icon.reservations {
         background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
         color: #D97706;
-    }
-
-    .action-icon.stats {
-        background: linear-gradient(135deg, #E0E7FF 0%, #C7D2FE 100%);
-        color: #4F46E5;
     }
 
     .action-icon.calendar {
@@ -433,7 +423,7 @@
         <div class="welcome-content">
             <div class="welcome-text">
                 <h1>Bienvenue, ${userSession.nomComplet} 👋</h1>
-                <p>Voici un aperçu de votre application SmartSpace System</p>
+                <p>Voici un aperçu de vos espaces et réservations</p>
             </div>
             <div class="welcome-stats">
                 <div class="welcome-stat">
@@ -441,12 +431,6 @@
                         <c:out value="${totalBiens}" default="0"/>
                     </span>
                     <span class="welcome-stat-label">Espaces</span>
-                </div>
-                <div class="welcome-stat">
-                    <span class="welcome-stat-value">
-                        <c:out value="${totalUsers}" default="0"/>
-                    </span>
-                    <span class="welcome-stat-label">Utilisateurs</span>
                 </div>
                 <div class="welcome-stat">
                     <span class="welcome-stat-value">
@@ -466,19 +450,6 @@
 </h2>
 
 <div class="actions-grid">
-    <a href="${pageContext.request.contextPath}/admin/users" class="action-card">
-        <div class="action-icon users">
-            <i class="fas fa-users"></i>
-        </div>
-        <div class="action-content">
-            <h3 class="action-title">Utilisateurs</h3>
-            <p class="action-description">Gérer les comptes utilisateurs et leurs rôles d'accès</p>
-            <span class="action-link">
-                Gérer <i class="fas fa-arrow-right"></i>
-            </span>
-        </div>
-    </a>
-
     <a href="${pageContext.request.contextPath}/admin/biens" class="action-card">
         <div class="action-icon rooms">
             <i class="fas fa-door-open"></i>
@@ -501,19 +472,6 @@
             <p class="action-description">Valider, refuser ou annuler les demandes de réservation</p>
             <span class="action-link">
                 Gérer <i class="fas fa-arrow-right"></i>
-            </span>
-        </div>
-    </a>
-
-    <a href="${pageContext.request.contextPath}/admin/stats" class="action-card">
-        <div class="action-icon stats">
-            <i class="fas fa-chart-bar"></i>
-        </div>
-        <div class="action-content">
-            <h3 class="action-title">Statistiques</h3>
-            <p class="action-description">Analyser le taux d'utilisation et les tendances</p>
-            <span class="action-link">
-                Voir <i class="fas fa-arrow-right"></i>
             </span>
         </div>
     </a>
@@ -623,15 +581,6 @@
             </span>
             <span class="quick-stat-value">
                 <c:out value="${totalBiens}" default="0"/>
-            </span>
-        </div>
-        <div class="quick-stat-item">
-            <span class="quick-stat-label">
-                <i class="fas fa-users"></i>
-                Utilisateurs
-            </span>
-            <span class="quick-stat-value">
-                <c:out value="${totalUsers}" default="0"/>
             </span>
         </div>
         <div class="quick-stat-item">

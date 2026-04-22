@@ -55,9 +55,8 @@ public class Paiement {
 		return datePaiement;
 	}
 
-	public void setReservation(Reservation reservation2) {
-		// TODO Auto-generated method stub
-		
+	public void setReservation(Reservation reservation) {
+		this.reservation = reservation;
 	}
 
 }

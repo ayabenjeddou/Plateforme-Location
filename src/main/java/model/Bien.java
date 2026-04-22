@@ -28,16 +28,23 @@ public class Bien {
 
     private boolean active;
 
+    private String imageUrl;
+    
+    @Column(length = 1000)
+    private String description;
+
     public Bien() {
     }
 
-    public Bien(Long id, String nom, int capacite, String localisation, String equipements, boolean active) {
+    public Bien(Long id, String nom, int capacite, String localisation, String equipements, boolean active, String imageUrl, String description) {
         this.id = id;
         this.nom = nom;
         this.capacite = capacite;
         this.localisation = localisation;
         this.equipements = equipements;
         this.active = active;
+        this.imageUrl = imageUrl;
+        this.description = description;
     }
 
     public Long getId() {
@@ -100,4 +107,20 @@ public class Bien {
 	public void setCategorie(String categorie) {
 		this.categorie = categorie;
 	}
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

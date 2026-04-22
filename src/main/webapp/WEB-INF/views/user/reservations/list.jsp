@@ -284,6 +284,11 @@
         color: #047857;
     }
 
+    .status-badge.PAYEE {
+        background: #10B981;
+        color: var(--white);
+    }
+
     .status-badge.REFUSEE {
         background: var(--danger-light);
         color: #B91C1C;
@@ -343,6 +348,17 @@
     .btn-view:hover {
         background: var(--primary);
         color: var(--white);
+    }
+
+    .btn-pay {
+        background: #10B981;
+        color: var(--white);
+        box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+    }
+
+    .btn-pay:hover {
+        background: #059669;
+        transform: translateY(-2px);
     }
 
     /* Empty state */
@@ -568,6 +584,9 @@
                                         <c:when test="${r.statut == 'CONFIRMEE'}">
                                             <i class="fas fa-check-circle"></i>
                                         </c:when>
+                                        <c:when test="${r.statut == 'PAYEE'}">
+                                            <i class="fas fa-money-bill-wave"></i>
+                                        </c:when>
                                         <c:when test="${r.statut == 'REFUSEE'}">
                                             <i class="fas fa-times-circle"></i>
                                         </c:when>
@@ -608,7 +627,14 @@
             </c:when>
 
             <c:otherwise>
-                <c:if test="${r.statut != 'ANNULEE' && r.statut != 'REFUSEE'}">
+                <c:if test="${r.statut == 'CONFIRMEE'}">
+                    <a href="${pageContext.request.contextPath}/user/paiement?id=${r.id}"
+                       class="btn-action-sm btn-pay">
+                        <i class="fas fa-credit-card"></i>
+                        Payer
+                    </a>
+                </c:if>
+                <c:if test="${r.statut != 'ANNULEE' && r.statut != 'REFUSEE' && r.statut != 'PAYEE'}">
                     <a href="${pageContext.request.contextPath}/user/reservations?action=cancel&id=${r.id}"
                        class="btn-action-sm btn-cancel"
                        onclick="return confirm('Êtes-vous sûr de vouloir annuler cette réservation ?');">

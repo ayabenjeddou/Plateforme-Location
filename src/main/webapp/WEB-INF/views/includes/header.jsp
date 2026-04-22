@@ -391,7 +391,7 @@
                             </a>
                         </li>
                         <li>
-                            <a class="nav-link-custom" href="${pageContext.request.contextPath}/admin/Biens">
+                            <a class="nav-link-custom" href="${pageContext.request.contextPath}/admin/biens">
                                 <i class="fas fa-door-open"></i>
                                 Biens
                             </a>
@@ -418,6 +418,40 @@
                             <a class="nav-link-custom" href="${pageContext.request.contextPath}/admin/stats">
                                 <i class="fas fa-chart-bar"></i>
                                 Stats
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link-custom" href="${pageContext.request.contextPath}/admin/avis">
+                                <i class="fas fa-star"></i>
+                                Avis
+                            </a>
+                        </li>
+                    </c:when>
+                    
+                    <%-- AGENT NAVIGATION --%>
+                    <c:when test="${user.role == 'AGENT'}">
+                        <li>
+                            <a class="nav-link-custom" href="${pageContext.request.contextPath}/agent/dashboard">
+                                <i class="fas fa-chart-pie"></i>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link-custom" href="${pageContext.request.contextPath}/admin/biens">
+                                <i class="fas fa-door-open"></i>
+                                Biens
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link-custom" href="${pageContext.request.contextPath}/admin/reservations">
+                                <i class="fas fa-calendar-check"></i>
+                                Réservations
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link-custom" href="${pageContext.request.contextPath}/admin/calendar">
+                                <i class="fas fa-calendar-alt"></i>
+                                Calendrier
                             </a>
                         </li>
                         <li>
@@ -500,7 +534,7 @@
                 <a class="mobile-nav-link" href="${pageContext.request.contextPath}/admin/dashboard">
                     <i class="fas fa-chart-pie"></i> Dashboard
                 </a>
-                <a class="mobile-nav-link" href="${pageContext.request.contextPath}/admin/Biens">
+                <a class="mobile-nav-link" href="${pageContext.request.contextPath}/admin/biens">
                     <i class="fas fa-door-open"></i> Biens
                 </a>
                 <a class="mobile-nav-link" href="${pageContext.request.contextPath}/admin/users">
@@ -514,6 +548,23 @@
                 </a>
                 <a class="mobile-nav-link" href="${pageContext.request.contextPath}/admin/stats">
                     <i class="fas fa-chart-bar"></i> Stats
+                </a>
+                <a class="mobile-nav-link" href="${pageContext.request.contextPath}/admin/avis">
+                    <i class="fas fa-star"></i> Avis
+                </a>
+            </c:when>
+            <c:when test="${user.role == 'AGENT'}">
+                <a class="mobile-nav-link" href="${pageContext.request.contextPath}/agent/dashboard">
+                    <i class="fas fa-chart-pie"></i> Dashboard
+                </a>
+                <a class="mobile-nav-link" href="${pageContext.request.contextPath}/admin/biens">
+                    <i class="fas fa-door-open"></i> Biens
+                </a>
+                <a class="mobile-nav-link" href="${pageContext.request.contextPath}/admin/reservations">
+                    <i class="fas fa-calendar-check"></i> Réservations
+                </a>
+                <a class="mobile-nav-link" href="${pageContext.request.contextPath}/admin/calendar">
+                    <i class="fas fa-calendar-alt"></i> Calendrier
                 </a>
                 <a class="mobile-nav-link" href="${pageContext.request.contextPath}/admin/avis">
                     <i class="fas fa-star"></i> Avis

@@ -49,10 +49,11 @@ public class RegisterServlet extends HttpServlet {
         String login = request.getParameter("login");
         String password = request.getParameter("motDePasse");
         String nom = request.getParameter("nomComplet");
+        String role = request.getParameter("role");
 
         // ✅ validation
-        if (login == null || password == null || nom == null ||
-            login.trim().isEmpty() || password.trim().isEmpty() || nom.trim().isEmpty()) {
+        if (login == null || password == null || nom == null || role == null ||
+            login.trim().isEmpty() || password.trim().isEmpty() || nom.trim().isEmpty() || role.trim().isEmpty()) {
 
             request.setAttribute("error", "Tous les champs sont obligatoires");
             request.getRequestDispatcher("/WEB-INF/views/auth/register.jsp").forward(request, response);
@@ -65,7 +66,7 @@ public class RegisterServlet extends HttpServlet {
         String hashed = BCrypt.hashpw(password.trim(), BCrypt.gensalt());
         user.setMotDePasse(hashed);
         user.setNomComplet(nom.trim());
-        user.setRole("USER");
+        user.setRole(role.trim());
         user.setActif(true);
 
         try {
