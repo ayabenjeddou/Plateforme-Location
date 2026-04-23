@@ -603,7 +603,6 @@
                                 </span>
                             </td>
                             <td>
-<td>
     <div class="actions-cell">
         <c:choose>
             <c:when test="${r.bienActive != null and not r.bienActive}">

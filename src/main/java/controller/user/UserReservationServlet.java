@@ -92,6 +92,7 @@ public class UserReservationServlet extends HttpServlet {
 
         List<Reservation> list = reservationDao.findByUtilisateur(user);
         request.setAttribute("reservations", list);
+        request.setAttribute("now", LocalDateTime.now());
 
         request.getRequestDispatcher("/WEB-INF/views/user/reservations/list.jsp")
                .forward(request, response);

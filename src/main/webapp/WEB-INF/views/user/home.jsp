@@ -673,7 +673,7 @@
                         <div class="room-card-footer">
                             <form method="post" action="${pageContext.request.contextPath}/user/reservations">
                                 <input type="hidden" name="action" value="quickCreate" />
-                                <input type="hidden" name="salleId" value="${s.id}" />
+                                <input type="hidden" name="bienId" value="${s.id}" />
                                 <input type="hidden" name="date" value="${date}" />
                                 <input type="hidden" name="startTime" value="${startTime}" />
                                 <input type="hidden" name="endTime" value="${endTime}" />
