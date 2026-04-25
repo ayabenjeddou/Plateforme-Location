@@ -33,6 +33,7 @@ package controller.user;
 	        String endTimeStr = request.getParameter("endTime");
 	        String capaciteMinStr = request.getParameter("capaciteMin");
 	        String equipements = request.getParameter("equipements");
+	        String localisation = request.getParameter("localisation");
 
 	        // Pour ré-afficher les valeurs dans le formulaire
 	        request.setAttribute("date", dateStr);
@@ -40,6 +41,7 @@ package controller.user;
 	        request.setAttribute("endTime", endTimeStr);
 	        request.setAttribute("capaciteMin", capaciteMinStr);
 	        request.setAttribute("equipements", equipements);
+	        request.setAttribute("localisation", localisation);
 
 	        List<Bien> Biens = null;
 	        String error = null;
@@ -72,7 +74,7 @@ package controller.user;
 	                    }
 
 	                    if (error == null) {
-	                        Biens = bienDao.findAvailable(debut, fin, capaciteMin, equipements);
+	                        Biens = bienDao.findAvailable(debut, fin, capaciteMin, equipements, localisation);
 	                        // pour pré-remplir le formulaire de réservation
 	                        request.setAttribute("searchDebut", debut.toString());
 	                        request.setAttribute("searchFin", fin.toString());
@@ -81,6 +83,12 @@ package controller.user;
 
 	            } catch (DateTimeParseException e) {
 	                error = "Format de date ou d'heure invalide.";
+	            } catch (Exception e) {
+	                throw new ServletException(e);
+	            }
+	        } else {
+	            try {
+	                Biens = bienDao.findDisponibles();
 	            } catch (Exception e) {
 	                throw new ServletException(e);
 	            }

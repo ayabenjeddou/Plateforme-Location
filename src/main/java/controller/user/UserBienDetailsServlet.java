@@ -95,7 +95,7 @@ public class UserBienDetailsServlet extends HttpServlet {
             request.setAttribute("avisUser", avisUser);
 
             request.getRequestDispatcher(
-                    "/WEB-INF/views/user/biens/details.jsp"
+                    "/WEB-INF/views/user/Bien/details.jsp"
             ).forward(request, response);
 
         } catch (Exception e) {
@@ -199,8 +199,8 @@ public class UserBienDetailsServlet extends HttpServlet {
 
             Bien bien = new Bien();
             bien.setId(bienId);
-
-            
+            avis.setBien(bien);
+            avis.setUtilisateur(user);
         }
 
         avis.setNote(note);
@@ -234,7 +234,7 @@ public class UserBienDetailsServlet extends HttpServlet {
             );
 
             request.getRequestDispatcher(
-                    "/WEB-INF/views/user/biens/details.jsp"
+                    "/WEB-INF/views/user/Bien/details.jsp"
             ).forward(request, response);
 
             return;

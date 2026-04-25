@@ -562,7 +562,7 @@
                                     <div class="room-icon">
                                         <i class="fas fa-door-open"></i>
                                     </div>
-                                    <span class="room-name">${r.bienNom}</span>
+                                    <span class="room-name">${r.bien.nom}</span>
                                 </div>
                             </td>
                             <td>
@@ -605,7 +605,7 @@
                             <td>
     <div class="actions-cell">
         <c:choose>
-            <c:when test="${r.bienActive != null and not r.bienActive}">
+            <c:when test="${not r.bien.active}">
                 <span class="text-warning small d-block mb-1">
                     Cette espace est actuellement suspendue (panne/travaux).
                     Veuillez choisir une autre espace.
@@ -618,7 +618,7 @@
             </c:when>
 
             <c:when test="${r.dateHeureDebut lt now}">
-                <a href="${pageContext.request.contextPath}/user/salle?id=${r.idBien}"
+                <a href="${pageContext.request.contextPath}/user/bien?id=${r.bien.id}"
                    class="btn-action-sm btn-view">
                     <i class="fas fa-star"></i>
                     Donner un avis

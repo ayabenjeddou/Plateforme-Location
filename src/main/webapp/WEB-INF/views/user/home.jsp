@@ -79,12 +79,21 @@
 
     /* ===== SEARCH CARD ===== */
     .search-card {
-        background: var(--white);
+        background: linear-gradient(145deg, #ffffff, #f8fafc);
         border-radius: var(--radius-lg);
-        padding: 32px;
-        box-shadow: var(--shadow);
+        padding: 36px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05), inset 0 2px 5px rgba(255, 255, 255, 1);
         margin-bottom: 32px;
-        border: 1px solid var(--gray-100);
+        border: 1px solid rgba(226, 232, 240, 0.8);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .search-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; height: 5px;
+        background: linear-gradient(90deg, var(--primary), #818cf8, #34d399);
     }
 
     .search-card-header {
@@ -146,20 +155,23 @@
     }
 
     .form-input {
-        padding: 12px 16px;
-        border: 2px solid var(--gray-200);
+        padding: 14px 18px;
+        border: 2px solid transparent;
         border-radius: var(--radius-sm);
         font-size: 14px;
         font-family: 'Poppins', sans-serif;
-        transition: var(--transition);
-        background: var(--gray-50);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        background: var(--white);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+        color: var(--dark);
     }
 
     .form-input:focus {
         outline: none;
-        border-color: var(--primary);
+        border-color: var(--primary-light);
         background: var(--white);
-        box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+        box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15);
+        transform: translateY(-2px);
     }
 
     .form-input::placeholder {
@@ -181,20 +193,23 @@
         align-items: center;
         gap: 10px;
         padding: 14px 28px;
-        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        background: linear-gradient(135deg, var(--primary) 0%, #4f46e5 50%, #3b82f6 100%);
+        background-size: 200% auto;
         color: var(--white);
         border: none;
         border-radius: var(--radius-sm);
         font-size: 15px;
         font-weight: 600;
         cursor: pointer;
-        transition: var(--transition);
+        transition: all 0.4s ease;
         font-family: 'Poppins', sans-serif;
+        box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
     }
 
     .btn-search:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(79, 70, 229, 0.4);
+        background-position: right center;
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 8px 25px rgba(79, 70, 229, 0.5);
     }
 
     .btn-search i {
@@ -568,11 +583,19 @@
         </div>
 
         <div class="form-group-custom">
+            <label for="localisation">
+                <i class="fas fa-map-marker-alt"></i>
+                Localisation
+            </label>
+            <input type="text" id="localisation" name="localisation" class="form-input" placeholder="Ex: Tunis, Ariana..." value="${localisation}">
+        </div>
+
+        <div class="form-group-custom">
             <label for="equipements">
                 <i class="fas fa-tv"></i>
                 Équipements
             </label>
-            <input type="text" id="equipements" name="equipements" class="form-input" placeholder="Projecteur, Wifi, Climatisation..." value="${equipements}">
+            <input type="text" id="equipements" name="equipements" class="form-input" placeholder="Projecteur, Wifi..." value="${equipements}">
         </div>
 
         <div class="search-actions">
@@ -582,7 +605,7 @@
             </button>
             <button type="submit" class="btn-search">
                 <i class="fas fa-search"></i>
-                Rechercher les locals
+                Rechercher les locaux
             </button>
         </div>
     </form>
@@ -599,13 +622,70 @@
 <!-- ===== RESULTS SECTION ===== -->
 <c:choose>
     <c:when test="${empty date or empty startTime or empty endTime}">
-        <div class="empty-state">
-            <div class="empty-state-icon">
-                <i class="fas fa-search"></i>
+        <div class="results-header">
+            <div class="results-title">
+                <h2>Nos locaux</h2>
+                <c:if test="${not empty Biens}">
+                    <span class="results-count">${Biens.size()} local(s)</span>
+                </c:if>
             </div>
-            <h3>Commencez votre recherche</h3>
-            <p>Veuillez sélectionner une date et un créneau horaire pour voir les locals disponibles</p>
         </div>
+
+        <c:if test="${empty Biens}">
+            <div class="empty-state">
+                <div class="empty-state-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h3>Commencez votre recherche</h3>
+                <p>Veuillez sélectionner une date et un créneau horaire pour voir les locals disponibles</p>
+            </div>
+        </c:if>
+
+        <!-- Rooms Grid -->
+        <c:if test="${not empty Biens}">
+            <div class="rooms-grid">
+                <c:forEach var="s" items="${Biens}">
+                    <div class="room-card">
+                        <div class="room-card-image">
+                            <c:choose>
+                                <c:when test="${not empty s.imageUrl}">
+                                    <img src="${pageContext.request.contextPath}/${s.imageUrl}" alt="${s.nom}" style="width: 100%; height: 100%; object-fit: cover;">
+                                </c:when>
+                                <c:otherwise>
+                                    <i class="fas fa-door-open"></i>
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
+                        <div class="room-card-content">
+                            <h3 class="room-name">${s.nom}</h3>
+                            <div class="room-details">
+                                <div class="room-detail">
+                                    <i class="fas fa-users"></i>
+                                    <span><strong>${s.capacite}</strong> personnes max.</span>
+                                </div>
+                                <div class="room-detail">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>${s.localisation}</span>
+                                </div>
+                            </div>
+                            <c:if test="${not empty s.equipements}">
+                                <div class="room-equipments">
+                                    <c:forTokens items="${s.equipements}" delims="," var="equip">
+                                        <span class="equipment-tag">${equip.trim()}</span>
+                                    </c:forTokens>
+                                </div>
+                            </c:if>
+                        </div>
+                        <div class="room-card-footer">
+                            <a href="${pageContext.request.contextPath}/user/bien?id=${s.id}" class="btn-reserve" style="text-decoration: none;">
+                                <i class="fas fa-info-circle"></i>
+                                Voir détails
+                            </a>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
+        </c:if>
     </c:when>
     <c:otherwise>
         <!-- Results Header -->
@@ -644,7 +724,14 @@
                 <c:forEach var="s" items="${Biens}">
                     <div class="room-card">
                         <div class="room-card-image">
-                            <i class="fas fa-door-open"></i>
+                            <c:choose>
+                                <c:when test="${not empty s.imageUrl}">
+                                    <img src="${pageContext.request.contextPath}/${s.imageUrl}" alt="${s.nom}" style="width: 100%; height: 100%; object-fit: cover;">
+                                </c:when>
+                                <c:otherwise>
+                                    <i class="fas fa-door-open"></i>
+                                </c:otherwise>
+                            </c:choose>
                             <span class="room-badge badge-available">
                                 <i class="fas fa-check-circle"></i>
                                 Disponible

@@ -439,11 +439,11 @@
                                         <div class="reservation-block status-${grid[key].statut}">
                                             <div class="reservation-room">
                                                 <i class="fas fa-door-open"></i>
-                                                ${grid[key].bienNom}
+                                                ${grid[key].bien.nom}
                                             </div>
                                             <div class="reservation-time">
                                                 <i class="fas fa-clock"></i>
-                                                ${grid[key].dateHeureDebut} - ${grid[key].dateHeureFin}
+                                                ${grid[key].dateHeureDebut.toLocalTime()} - ${grid[key].dateHeureFin.toLocalTime()}
                                             </div>
                                             <span class="status-badge ${grid[key].statut}">
                                                 <c:choose>

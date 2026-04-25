@@ -23,13 +23,15 @@ public class BienService {
     public List<Bien> getDisponibles(LocalDateTime debut,
                                      LocalDateTime fin,
                                      Integer capaciteMin,
-                                     String equipementsContains) throws Exception {
+                                     String equipementsContains,
+                                     String localisation) throws Exception {
 
         return bienDao.findAvailable(
                 debut,
                 fin,
                 capaciteMin,
-                equipementsContains
+                equipementsContains,
+                localisation
         );
     }
 }

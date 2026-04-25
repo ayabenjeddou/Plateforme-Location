@@ -473,10 +473,23 @@
     <!-- ===== LEFT: ROOM INFO ===== -->
     <div class="room-info-card">
         <div class="room-image-section">
-            <i class="fas fa-door-open"></i>
+            <c:choose>
+                <c:when test="${not empty bien.imageUrl}">
+                    <img src="${pageContext.request.contextPath}/${bien.imageUrl}" alt="${bien.nom}" style="width: 100%; height: 100%; object-fit: cover; position: relative; z-index: 1;">
+                </c:when>
+                <c:otherwise>
+                    <i class="fas fa-door-open" style="position: relative; z-index: 1;"></i>
+                </c:otherwise>
+            </c:choose>
         </div>
         <div class="room-info-content">
             <h1 class="room-name">${bien.nom}</h1>
+
+            <c:if test="${not empty bien.description}">
+                <p style="color: var(--gray-600); font-size: 14px; margin-bottom: 20px; line-height: 1.6;">
+                    ${bien.description}
+                </p>
+            </c:if>
 
             <div class="room-details-list">
                 <div class="room-detail-item">
@@ -567,9 +580,9 @@
                     </div>
                 </c:if>
 
-                <form action="${pageContext.request.contextPath}/user/Bien" method="post">
+                <form action="${pageContext.request.contextPath}/user/bien" method="post">
                     <input type="hidden" name="action" value="saveAvis" />
-                    <input type="hidden" name="BienId" value="${bien.id}" />
+                    <input type="hidden" name="bienId" value="${bien.id}" />
 
                     <div class="form-group">
                         <label>Votre note</label>
@@ -607,12 +620,12 @@
 
                         <c:if test="${avisUser != null}">
                             </form>
-                            <form action="${pageContext.request.contextPath}/user/salle" 
+                            <form action="${pageContext.request.contextPath}/user/bien" 
                                   method="post" 
                                   style="display: inline;">
                                 <input type="hidden" name="action" value="deleteAvis" />
                                 <input type="hidden" name="avisId" value="${avisUser.id}" />
-                                <input type="hidden" name="salleId" value="${bien.id}" />
+                                <input type="hidden" name="bienId" value="${bien.id}" />
                                 <button type="submit" 
                                         class="btn-danger-outline"
                                         onclick="return confirm('Supprimer votre avis ?');">

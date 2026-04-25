@@ -17,7 +17,8 @@ public interface BienDao {
     List<Bien> findAvailable(LocalDateTime debut,
                              LocalDateTime fin,
                              Integer capaciteMin,
-                             String equipementsContains) throws Exception;
+                             String equipementsContains,
+                             String localisation) throws Exception;
 
     List<Bien> findDisponibles() throws Exception;
 }

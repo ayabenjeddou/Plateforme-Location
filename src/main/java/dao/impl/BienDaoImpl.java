@@ -68,7 +68,8 @@ public class BienDaoImpl implements BienDao {
     public List<Bien> findAvailable(LocalDateTime debut,
                                     LocalDateTime fin,
                                     Integer capaciteMin,
-                                    String equipementsContains) {
+                                    String equipementsContains,
+                                    String localisation) {
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 
@@ -79,14 +80,18 @@ public class BienDaoImpl implements BienDao {
             }
 
             if (equipementsContains != null && !equipementsContains.isEmpty()) {
-                hql.append(" AND b.equipements LIKE :equipements");
+                hql.append(" AND lower(b.equipements) LIKE lower(:equipements)");
+            }
+
+            if (localisation != null && !localisation.trim().isEmpty()) {
+                hql.append(" AND lower(b.localisation) LIKE lower(:localisation)");
             }
 
             hql.append("""
                 AND b.id NOT IN (
                     SELECT r.bien.id
                     FROM Reservation r
-                    WHERE r.statut IN ('EN_ATTENTE','CONFIRMEE')
+                    WHERE r.statut IN ('EN_ATTENTE','CONFIRMEE','PAYEE')
                     AND r.dateHeureDebut < :fin
                     AND r.dateHeureFin > :debut
                 )
@@ -99,6 +104,9 @@ public class BienDaoImpl implements BienDao {
 
             if (equipementsContains != null && !equipementsContains.isEmpty())
                 query.setParameter("equipements", "%" + equipementsContains + "%");
+
+            if (localisation != null && !localisation.trim().isEmpty())
+                query.setParameter("localisation", "%" + localisation.trim() + "%");
 
             query.setParameter("debut", debut);
             query.setParameter("fin", fin);
