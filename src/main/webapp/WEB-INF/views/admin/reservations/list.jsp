@@ -492,7 +492,7 @@
                                     <div class="info-icon room">
                                         <i class="fas fa-door-open"></i>
                                     </div>
-                                    <span class="info-name">${r.bienNom}</span>
+                                    <span class="info-name">${r.bien.nom}</span>
                                 </div>
                             </td>
                             <td>
@@ -500,7 +500,7 @@
                                     <div class="info-icon user">
                                         <i class="fas fa-user"></i>
                                     </div>
-                                    <span class="info-name">${r.utilisateurLogin}</span>
+                                    <span class="info-name">${r.utilisateur.login}</span>
                                 </div>
                             </td>
                             <td>${r.dateHeureDebut}</td>

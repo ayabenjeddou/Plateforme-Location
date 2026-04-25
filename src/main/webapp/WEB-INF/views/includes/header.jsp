@@ -27,8 +27,8 @@
     <style>
         /* ===== ROOT VARIABLES ===== */
         :root {
-            --primary: #ec30ed;
-            --primary-dark: #5B21B6;
+            --primary: #af81ce;
+            --primary-dark: #8a57ad;
             --primary-light: #A78BFA;
             --primary-lighter: #E0E7FF;
             --accent: #F59E0B;
@@ -41,7 +41,7 @@
             --warning-light: #FEF3C7;
             --info: #3B82F6;
             --info-light: #DBEAFE;
-            --dark: #c10fb4;
+            --dark: #111827;
             --gray-900: #111827;
             --gray-700: #374151;
             --gray-600: #4B5563;
@@ -84,7 +84,7 @@
 
         /* ===== NAVBAR ===== */
         .SmartSpace-navbar {
-            background: var(--white);
+            background: var(--primary);
             box-shadow: var(--shadow);
             padding: 0;
             position: sticky;
@@ -112,12 +112,12 @@
         .brand-icon {
             width: 42px;
             height: 42px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            background: var(--white);
             border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--white);
+            color: var(--primary);
             font-size: 20px;
             box-shadow: var(--shadow-sm);
         }
@@ -125,11 +125,11 @@
         .brand-text {
             font-size: 22px;
             font-weight: 700;
-            color: var(--dark);
+            color: var(--white);
         }
 
         .brand-text span {
-            color: var(--primary);
+            color: #FFD700; /* Gold */
         }
 
         /* Nav Links */
@@ -150,7 +150,7 @@
             border-radius: var(--radius-sm);
             font-size: 14px;
             font-weight: 500;
-            color: var(--gray-600);
+            color: var(--white);
             transition: var(--transition);
             position: relative;
         }
@@ -160,13 +160,13 @@
         }
 
         .nav-link-custom:hover {
-            background: var(--primary-lighter);
-            color: var(--primary);
+            background: rgba(255, 215, 0, 0.1);
+            color: #FFD700; /* Gold */
         }
 
         .nav-link-custom.active {
-            background: var(--primary-lighter);
-            color: var(--primary);
+            background: rgba(255, 215, 0, 0.1);
+            color: #FFD700; /* Gold */
         }
 
         .nav-link-custom.active::after {
@@ -177,7 +177,7 @@
             transform: translateX(-50%);
             width: 20px;
             height: 3px;
-            background: var(--primary);
+            background: #FFD700; /* Gold */
             border-radius: 2px;
         }
 
@@ -200,7 +200,7 @@
         .user-avatar {
             width: 36px;
             height: 36px;
-            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            background: linear-gradient(135deg, var(--danger-light), var(--danger));
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -263,7 +263,7 @@
             display: block;
             width: 24px;
             height: 2px;
-            background: var(--gray-700);
+            background: var(--white);
             margin: 5px 0;
             transition: var(--transition);
             border-radius: 2px;

@@ -568,7 +568,7 @@
                             </div>
                             <div class="activity-info">
                                 <div class="activity-text">
-                                    <strong>${r.utilisateurLogin}</strong> a réservé <strong>${r.bienNom}</strong>
+                                    <strong>${r.utilisateur.login}</strong> a réservé <strong>${r.bien.nom}</strong>
                                 </div>
                                 <div class="activity-meta">
                                     ${r.dateHeureDebut} - ${r.dateHeureFin}

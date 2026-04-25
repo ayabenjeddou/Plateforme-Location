@@ -2,15 +2,15 @@
 </main>
 
 <!-- ===== FOOTER ===== -->
-<footer style="background: var(--white); border-top: 1px solid var(--gray-200); padding: 24px; margin-top: 40px;">
+<footer style="background: var(--primary); border-top: 1px solid rgba(255,255,255,0.2); padding: 24px; margin-top: 40px;">
     <div style="max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
         <div style="display: flex; align-items: center; gap: 12px;">
-            <div style="width: 32px; height: 32px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 14px;">
+            <div style="width: 32px; height: 32px; background: white; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 14px;">
                 <i class="fas fa-building"></i>
             </div>
-            <span style="font-weight: 600; color: var(--dark);">SmartSpace <span style="color: var(--primary);">System</span></span>
+            <span style="font-weight: 600; color: var(--white);">SmartSpace <span style="color: #FFD700;">System</span></span>
         </div>
-        <p style="color: var(--gray-500); font-size: 14px; margin: 0;">
+        <p style="color: rgba(255,255,255,0.8); font-size: 14px; margin: 0;">
             © 2026 SmartSpace System Tous droits réservés.
         </p>
     </div>

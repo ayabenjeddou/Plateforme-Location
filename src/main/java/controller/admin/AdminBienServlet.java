@@ -127,13 +127,25 @@ public class AdminBienServlet extends HttpServlet {
         Part part = request.getPart("image");
         if (part != null && part.getSize() > 0) {
             String fileName = java.nio.file.Paths.get(part.getSubmittedFileName()).getFileName().toString();
-            // Create path in the deployed webapp folder
+            String uniqueFileName = System.currentTimeMillis() + "_" + fileName;
+
+            // 1. Sauvegarder dans le dossier de déploiement (Tomcat) pour accès immédiat
             String uploadPath = request.getServletContext().getRealPath("") + File.separator + "assets" + File.separator + "images" + File.separator + "uploads";
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) uploadDir.mkdirs();
             
-            String uniqueFileName = System.currentTimeMillis() + "_" + fileName;
-            part.write(uploadPath + File.separator + uniqueFileName);
+            // 2. Sauvegarder dans le dossier source (Workspace) pour persistance après redémarrage
+            String workspacePath = "c:\\Users\\eya\\eclipse-workspace3\\PlateformeLocation\\src\\main\\webapp\\assets\\images\\uploads";
+            File workspaceDir = new File(workspacePath);
+            if (!workspaceDir.exists()) workspaceDir.mkdirs();
+
+            // Copier le fichier dans les deux emplacements
+            try (java.io.InputStream input = part.getInputStream()) {
+                java.nio.file.Files.copy(input, new java.io.File(uploadDir, uniqueFileName).toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+            }
+            try (java.io.InputStream input = part.getInputStream()) {
+                java.nio.file.Files.copy(input, new java.io.File(workspaceDir, uniqueFileName).toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+            }
             
             bien.setImageUrl("assets/images/uploads/" + uniqueFileName);
         }
