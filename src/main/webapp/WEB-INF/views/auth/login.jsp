@@ -531,10 +531,7 @@
         <div class="shape shape-3"></div>
 
         <div class="brand-content">
-            <!-- Logo -->
-            <div class="brand-logo">
-                <i class="fas fa-building"></i>
-            </div>
+            <!-- Logo removed -->
             
             <!-- Brand Name -->
             <h2 class="brand-name">SmartSpace <span>System</span></h2>

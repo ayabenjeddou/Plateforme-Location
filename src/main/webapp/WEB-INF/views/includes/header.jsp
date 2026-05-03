@@ -372,9 +372,6 @@
     <div class="navbar-container">
         <!-- Brand -->
         <a href="${pageContext.request.contextPath}/" class="navbar-brand-custom">
-            <div class="brand-icon">
-                <i class="fas fa-building"></i>
-            </div>
             <span class="brand-text">SmartSpace <span>System</span></span>
         </a>
 

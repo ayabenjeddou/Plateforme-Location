@@ -246,7 +246,7 @@
         color: #B45309;
     }
 
-    .status-badge.CONFIRMEE {
+    .status-badge.CONFIRMEE, .status-badge.PAYEE {
         background: var(--success-light);
         color: #047857;
     }
@@ -429,9 +429,9 @@
         <span class="count">${pendingCount}</span>
     </a>
 
-    <!-- Confirmées (VALIDEE en base) -->
-    <a class="filter-tab ${statusFilter == 'VALIDEE' ? 'active' : ''}"
-       href="${pageContext.request.contextPath}/admin/reservations?status=VALIDEE">
+    <!-- Confirmées (CONFIRMEE ou PAYEE en base) -->
+    <a class="filter-tab ${statusFilter == 'CONFIRMEE' ? 'active' : ''}"
+       href="${pageContext.request.contextPath}/admin/reservations?status=CONFIRMEE">
         <i class="fas fa-check-circle"></i>
         Confirmées
         <span class="count">${confirmedCount}</span>
@@ -511,7 +511,7 @@
                                         <c:when test="${r.statut == 'EN_ATTENTE'}">
                                             <i class="fas fa-hourglass-half"></i>
                                         </c:when>
-                                        <c:when test="${r.statut == 'CONFIRMEE'}">
+                                        <c:when test="${r.statut == 'CONFIRMEE' || r.statut == 'PAYEE'}">
                                             <i class="fas fa-check-circle"></i>
                                         </c:when>
                                         <c:when test="${r.statut == 'REFUSEE'}">

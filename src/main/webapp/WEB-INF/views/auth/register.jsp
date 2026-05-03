@@ -544,10 +544,7 @@
         <div class="shape shape-3"></div>
 
         <div class="brand-content">
-            <!-- Logo -->
-            <div class="brand-logo">
-                <i class="fas fa-building"></i>
-            </div>
+            <!-- Logo removed -->
             
             <!-- Brand Name -->
             <h2 class="brand-name">SmartSpace <span>System</span></h2>
@@ -626,19 +623,8 @@
             </div>
         </div>
 
-        <!-- ROLE -->
-        <div class="form-group">
-            <label>Rôle</label>
-            <div class="input-wrapper">
-                <i class="fas fa-users"></i>
-                <select name="role" class="form-control" required>
-                    <option value="">Choisir un rôle</option>
-                    <option value="USER">User</option>
-                    <option value="AGENT">Agent</option>
-                    <option value="ADMIN">Admin</option>
-                </select>
-            </div>
-        </div>
+        <!-- ROLE (Hidden, default to USER) -->
+        <input type="hidden" name="role" value="USER">
 	<!--  reCAPTCHA  -->
 <div class="form-group" style="text-align:center;">
     <div class="g-recaptcha" data-sitekey="6Lc5g7wsAAAAAALKn-7EMrNh33SFx5x7h-mOhLf3"></div>

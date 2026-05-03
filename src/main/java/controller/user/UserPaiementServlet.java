@@ -62,8 +62,8 @@ public class UserPaiementServlet extends HttpServlet {
 
             request.setAttribute("reservation", r);
             // Redirection vers le formulaire de paiement relocalisé
-            request.getRequestDispatcher("/WEB-INF/views/user/paiement_form.jsp")
-                   .forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/views/user/paiement/form.jsp")
+            .forward(request, response);
 
         } catch (Exception e) {
             e.printStackTrace();

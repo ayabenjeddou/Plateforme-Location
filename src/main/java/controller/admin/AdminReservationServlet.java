@@ -90,7 +90,11 @@ public class AdminReservationServlet extends HttpServlet {
             filteredReservations = allReservations;
         } else {
             for (Reservation r : allReservations) {
-                if (statusFilter.equals(r.getStatut().name())) {
+                if ("CONFIRMEE".equals(statusFilter)) {
+                    if ("CONFIRMEE".equals(r.getStatut().name()) || "PAYEE".equals(r.getStatut().name())) {
+                        filteredReservations.add(r);
+                    }
+                } else if (statusFilter.equals(r.getStatut().name())) {
                     filteredReservations.add(r);
                 }
             }

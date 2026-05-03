@@ -60,9 +60,9 @@
                 <label for="role" class="form-label">Rôle</label>
                 <select id="role" name="role" class="form-select" required>
                     <option value="">-- Choisir --</option>
-                    <option value="USER"
-                        <c:if test="${utilisateur.role == 'USER'}">selected</c:if>>
-                        Utilisateur
+                    <option value="AGENT"
+                        <c:if test="${utilisateur.role == 'AGENT'}">selected</c:if>>
+                        Agent
                     </option>
                     <option value="ADMIN"
                         <c:if test="${utilisateur.role == 'ADMIN'}">selected</c:if>>

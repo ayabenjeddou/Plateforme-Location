@@ -664,6 +664,10 @@
                                     <span><strong>${s.capacite}</strong> personnes max.</span>
                                 </div>
                                 <div class="room-detail">
+                                    <i class="fas fa-tag"></i>
+                                    <span><strong>${s.prixParHeure} DT</strong> / Heure</span>
+                                </div>
+                                <div class="room-detail">
                                     <i class="fas fa-map-marker-alt"></i>
                                     <span>${s.localisation}</span>
                                 </div>
@@ -743,6 +747,10 @@
                                 <div class="room-detail">
                                     <i class="fas fa-users"></i>
                                     <span><strong>${s.capacite}</strong> personnes max.</span>
+                                </div>
+                                <div class="room-detail">
+                                    <i class="fas fa-tag"></i>
+                                    <span><strong>${s.prixParHeure} DT</strong> / Heure</span>
                                 </div>
                                 <div class="room-detail">
                                     <i class="fas fa-map-marker-alt"></i>

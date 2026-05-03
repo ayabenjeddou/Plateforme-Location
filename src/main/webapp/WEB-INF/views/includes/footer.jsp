@@ -5,9 +5,6 @@
 <footer style="background: var(--primary); border-top: 1px solid rgba(255,255,255,0.2); padding: 24px; margin-top: 40px;">
     <div style="max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
         <div style="display: flex; align-items: center; gap: 12px;">
-            <div style="width: 32px; height: 32px; background: white; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 14px;">
-                <i class="fas fa-building"></i>
-            </div>
             <span style="font-weight: 600; color: var(--white);">SmartSpace <span style="color: #FFD700;">System</span></span>
         </div>
         <p style="color: rgba(255,255,255,0.8); font-size: 14px; margin: 0;">
