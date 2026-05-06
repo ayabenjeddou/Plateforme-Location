@@ -1,14 +1,14 @@
 Application Web de Gestion et de Réservation de Biens Immobiliers
 
 Mini-projet – Développement d’applications Web avec Jakarta EE
-Classe : FIGL2 – Année universitaire : 2024-2025
+Classe : MPSSI1 – Année universitaire : 2025-2026
 
 1. Description générale
 
 Cette application web permet de gérer des biens immobiliers, leurs réservations et paiements au sein d’une plateforme dédiée.
 Trois types d’utilisateurs sont disponibles :
 
-Administrateur
+Administrateur :
 
 Gestion des utilisateurs (CRUD)
 
@@ -22,7 +22,7 @@ Visualisation d’un calendrier par bien
 
 Modération des avis laissés par les utilisateurs
 
-Client (Utilisateur simple)
+Client (Utilisateur simple):
 
 Consultation de la liste des biens
 
@@ -38,7 +38,7 @@ Vue calendrier des disponibilités
 
 Possibilité de laisser une note et un avis textuel sur un bien
 
-Agent
+Agent :
 
 Tableau de bord dédié
 
@@ -63,7 +63,7 @@ Back-end
 
 Java
 
-Jakarta Servlet & JSP (Tomcat 10)
+Jakarta Servlet & JSP (Tomcat 11)
 
 JSTL + Expression Language (EL)
 
@@ -83,7 +83,7 @@ MySQL 8
 
 Serveur
 
-Apache Tomcat 10.x
+Apache Tomcat 11
 
 IDE
 
@@ -306,9 +306,9 @@ JDK 8+
 
 MySQL
 
-Tomcat 10
+Tomcat 11
 
-Eclipse (ou similaire)
+Eclipse 
 
 6.2. Étapes
 
@@ -320,7 +320,7 @@ Configurer HibernateUtil.java ou hibernate.cfg.xml si nécessaire
 
 Vérifier les drivers (MySQL, Hibernate) dans WEB-INF/lib
 
-Configurer le serveur Tomcat 10
+Configurer le serveur Tomcat 11
 
 Lancer l’application :
 
@@ -365,10 +365,6 @@ Intégration d'une vraie API de paiement (ex: Stripe)
 Recherche avancée de biens avec filtres complexes
 
 Internationalisation (FR/EN)
-
-Export PDF / Excel des paiements
-
-Notifications email
 
 9. Auteurs
 
